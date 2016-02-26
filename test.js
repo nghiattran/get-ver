@@ -50,6 +50,13 @@ describe('test', function(){
     })
   });
 
+  it('check fail: no package name', function(done) {
+    getVer('', '^1.x').catch(function (err) {
+      assert.ok(err);
+      done();
+    })
+  });
+
   it('check fail: nonexist version', function(done) {
     getVer('semver', '100.0.0').catch(function (err) {
       assert.ok(err);
