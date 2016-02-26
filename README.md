@@ -1,4 +1,4 @@
-# node-version
+# get-ver
 
 > Get available version on npmjs.com
 
@@ -7,22 +7,22 @@
 ## Installation
 
 ```
-npm install --save node-version
+npm install --save get-ver
 ```
 
 ## Usage
 
-#### node-version(**pakageName**, [**version**])
+#### get-ver(**pakageName**, [**version**])
 
 **version** can be all types of semantic version. Check at [semver](https://www.npmjs.com/package/semver)
 
 
 
 ```
-var nodeVer = require('node-version');
+var getVer = require('get-ver');
 
 // Get latest version
-nodeVer('semver')
+getVer('semver')
   .then(function (res) {
     // do somgthing
   })
@@ -31,7 +31,7 @@ nodeVer('semver')
   }
 
 // Get in range 4.0.5 <= X < 5.0.0
-nodeVer('semver', '^4.0.5')
+getVer('semver', '^4.0.5')
   .then(function (res) {
     // do somgthing
   })
@@ -46,11 +46,11 @@ nodeVer('semver', '^4.0.5')
 ## License
 MIT © [NghiaTTran](https://github.com/nghiattran)
 
-[npm-image]: https://badge.fury.io/js/node-version.svg
-[npm-url]: https://npmjs.org/package/node-version
-[travis-image]: https://travis-ci.org/nghiattran/node-version.svg?branch=master
-[travis-url]: https://travis-ci.org/nghiattran/node-version
-[daviddm-image]: https://david-dm.org/nghiattran/node-version.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/nghiattran/node-version
-[coveralls-image]: https://coveralls.io/repos/nghiattran/node-version/badge.svg
-[coveralls-url]: https://coveralls.io/github/nghiattran/node-version
+[npm-image]: https://badge.fury.io/js/get-ver.svg
+[npm-url]: https://npmjs.org/package/get-ver
+[travis-image]: https://travis-ci.org/nghiattran/get-ver.svg?branch=master
+[travis-url]: https://travis-ci.org/nghiattran/get-ver
+[daviddm-image]: https://david-dm.org/nghiattran/get-ver.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/nghiattran/get-ver
+[coveralls-image]: https://coveralls.io/repos/nghiattran/get-ver/badge.svg
+[coveralls-url]: https://coveralls.io/github/nghiattran/get-ver
