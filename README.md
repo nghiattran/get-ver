@@ -18,7 +18,7 @@ npm install --save get-ver
 
 
 
-```
+```js
 var getVer = require('get-ver');
 
 // Get latest version
