@@ -1,50 +1,57 @@
+'use strict'
 
-'use strict';
-var semver = require('semver');
-var http = require('http');
+var semver = require('semver')
+var http = require('http')
 
 module.exports = function (pkgName, version){
-  pkgName = pkgName || '';
-  version = version || '*';
+  pkgName = pkgName || ''
+  version = version || '*'
   var options = {
     hostname: 'registry.npmjs.org',
     path: ('/' + pkgName)
-  };
+  }
 
   return new Promise(function (fulfill, reject) {
 
     if (pkgName = '') {
-      reject('A package name is required.');
-    };
+      reject('A package name is required.')
+    }
 
     http.get(options, function (res) {
 
       if (res.statusCode !== 200) {
-        reject('Package doesn\'t exist.');
+        reject(errorHandler(undefined, 'Package doesn\'t exist.'))
       }
 
-      var data = '';
+      var data = ''
       res
         .setEncoding('utf8')
         .on('data', function (chunk) {
-          data += chunk;
+          data += chunk
         })
         .on('end', function (){
           try{
-            data = JSON.parse(data);
+            data = JSON.parse(data)
             if (!data.versions) {
-              reject('Package doesn\'t exist.');
-            };
-            version = semver.maxSatisfying(Object.keys(data.versions), version);
+              reject(errorHandler(pkgName, 'Package doesn\'t exist.'))
+            }
+            version = semver.maxSatisfying(Object.keys(data.versions), version)
 
             if (!version) {
-              reject('Version doesn\'t exist')
+              reject(errorHandler(pkgName, 'Version doesn\'t exist'))
             }
-            fulfill(version);
+            fulfill(version)
           } catch(err) {
             reject(err)
           }
         })
     })
   })
-};
+}
+
+function errorHandler (pkgName, msg) {
+  return {
+    pkgName,
+    msg
+  }
+}
