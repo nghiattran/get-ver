@@ -13,14 +13,14 @@ module.exports = function (pkgName, version){
 
   return new Promise(function (fulfill, reject) {
 
-    if (pkgName = '') {
-      reject('A package name is required.')
+    if (pkgName === '') {
+      reject(errorHandler(undefined, 'Package doesn\'t exist.'))
     }
 
     http.get(options, function (res) {
 
       if (res.statusCode !== 200) {
-        reject(errorHandler(undefined, 'Package doesn\'t exist.'))
+        reject(errorHandler(pkgName, 'Package doesn\'t exist.'))
       }
 
       var data = ''
