@@ -8,7 +8,7 @@ describe('test', function(){
   
   it('check success: static version', function(done) {
     getVer('semver', '5.0.0').then(function (res) {
-      assert.equal(res, '5.0.0')
+      assert.equal(res.version, '5.0.0')
       done()
     })
   })
@@ -29,16 +29,16 @@ describe('test', function(){
 
   it('check success: range', function(done) {
     getVer('semver', '^4.0.5').then(function (res) {
-      assert.ok(res < '5.0.0')
-      assert.ok(res >= '4.0.5')
+      assert.ok(res.version < '5.0.0')
+      assert.ok(res.version >= '4.0.5')
       done()
     })
   })
 
   it('check success: range x', function(done) {
     getVer('semver', '^1.x').then(function (res) {
-      assert.ok(res < '2.0.0')
-      assert.ok(res >= '1.0.0')
+      assert.ok(res.version < '2.0.0')
+      assert.ok(res.version >= '1.0.0')
       done()
     })
   })

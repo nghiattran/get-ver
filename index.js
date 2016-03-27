@@ -1,57 +1,30 @@
 'use strict'
 
 var semver = require('semver')
-var http = require('http')
+var packageJson = require('get-package-json')
 
-module.exports = function (pkgName, version){
-  pkgName = pkgName || ''
-  version = version || '*'
-  var options = {
-    hostname: 'registry.npmjs.org',
-    path: ('/' + pkgName)
-  }
+module.exports = function (pkgName, needVersion){
+  needVersion = needVersion || '*'
 
   return new Promise(function (fulfill, reject) {
+    packageJson(pkgName)
+      .then(function (res) {
+        var version = semver.maxSatisfying(Object.keys(res.pkg.versions), needVersion)
 
-    if (pkgName === '') {
-      reject(errorHandler(undefined, 'Package doesn\'t exist.'))
-    }
+        if (!version) {
+          reject({
+            pkgName: pkgName,
+            msg : 'No version match with ' + needVersion
+          })
+        }
 
-    http.get(options, function (res) {
-
-      if (res.statusCode !== 200) {
-        reject(errorHandler(pkgName, 'Package doesn\'t exist.'))
-      }
-
-      var data = ''
-      res
-        .setEncoding('utf8')
-        .on('data', function (chunk) {
-          data += chunk
+        fulfill({
+          pkg: res.pkg,
+          version: version
         })
-        .on('end', function (){
-          try{
-            data = JSON.parse(data)
-            if (!data.versions) {
-              reject(errorHandler(pkgName, 'Package doesn\'t exist.'))
-            }
-            version = semver.maxSatisfying(Object.keys(data.versions), version)
-
-            if (!version) {
-              reject(errorHandler(pkgName, 'Version doesn\'t exist'))
-            }
-            fulfill(version)
-          } catch(err) {
-            reject(err)
-          }
-        })
-    })
+      })
+      .catch(function (err) {
+        reject(err)
+      })
   })
-}
-
-function errorHandler (pkgName, msg) {
-  return {
-    pkgName,
-    msg
-  }
 }
