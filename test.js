@@ -9,6 +9,7 @@ describe('test', function(){
   it('check success: static version', function(done) {
     getVer('semver', '5.0.0').then(function (res) {
       assert.equal(res.version, '5.0.0')
+      assert.equal(res.pkg.version, res.version)
       done()
     })
   })
@@ -16,6 +17,7 @@ describe('test', function(){
   it('check success: latest', function(done) {
     getVer('semver', '*').then(function (res) {
       assert.ok(res)
+      assert.equal(res.pkg.version, res.version)
       done()
     })
   })
@@ -23,6 +25,7 @@ describe('test', function(){
   it('check success: no version', function(done) {
     getVer('semver').then(function (res) {
       assert.ok(res)
+      assert.equal(res.pkg.version, res.version)
       done()
     })
   })
@@ -31,6 +34,7 @@ describe('test', function(){
     getVer('semver', '^4.0.5').then(function (res) {
       assert.ok(res.version < '5.0.0')
       assert.ok(res.version >= '4.0.5')
+      assert.equal(res.pkg.version, res.version)
       done()
     })
   })
@@ -39,6 +43,7 @@ describe('test', function(){
     getVer('semver', '^1.x').then(function (res) {
       assert.ok(res.version < '2.0.0')
       assert.ok(res.version >= '1.0.0')
+      assert.equal(res.pkg.version, res.version)
       done()
     })
   })

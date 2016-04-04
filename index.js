@@ -19,7 +19,7 @@ module.exports = function (pkgName, needVersion){
         }
 
         fulfill({
-          pkg: res.pkg,
+          pkg: res.pkg.versions[version],
           version: version
         })
       })

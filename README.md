@@ -16,7 +16,9 @@ npm install --save get-ver
 
 **version** can be all types of semantic version. Check at [semver](https://www.npmjs.com/package/semver)
 
-
+Return:
+`version`: requested version
+`pkg`: package.json for the version
 
 ```js
 var getVer = require('get-ver');
